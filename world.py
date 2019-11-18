@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import time
 import lxml
 
+path = './a.csv'
 driver = webdriver.Chrome()
 url = 'https://www3.nhk.or.jp/nhkworld/zh/news/'
 driver.get(url)
@@ -14,11 +15,16 @@ driver.find_element_by_xpath(
 title = driver.find_elements_by_xpath('//*[@id="p-article"]/div[1]/h1/span')
 body = driver.find_elements_by_xpath('//*[@id="p-article"]/div[3]')
 
+with open(path, mode='a') as f:
+    f.write('*******************************************************\n\n')
+
 for i in title:
-    print(i.text)
+    with open(path, mode='a') as f:
+        f.write(i.text + '\n')
 
 for i in body:
-    print(i.text)
+    with open(path, mode='a') as f:
+        f.write(i.text + '\n\n')
 
 time.sleep(1)
 driver.back()
@@ -33,14 +39,17 @@ for i in range(1, 9):
         body = driver.find_elements_by_xpath('//*[@id="p-article"]/div[3]')
 
         for j in title:
-            print(j.text)
+            with open(path, mode='a') as f:
+                f.write(j.text + '\n')
 
         for j in body:
-            print(j.text)
+            with open(path, mode='a') as f:
+                f.write(j.text + '\n\n')
         time.sleep(1)
         driver.back()
     else:
         break
-
+with open(path, mode='a') as f:
+    f.write('*******************************************************\n\n')
 
 driver.quit()
